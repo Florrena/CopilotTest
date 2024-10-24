@@ -1,0 +1,21 @@
+# Nazwa skilla
+name: Generate and Paraphrase Intro
+description: Bot generates and paraphrases an introduction based on a provided template and file content.
+
+# Parametry, które bot przyjmie
+parameters:
+  - name: template
+    description: The template for the introduction.
+    type: string
+  - name: topic
+    description: The chosen topic for the introduction.
+    type: string
+  - name: filePath
+    description: The path to the file containing the data for analysis.
+    type: string
+
+# Definicja akcji
+actions:
+  - id: generate_and_paraphrase_intro
+    description: Generates and paraphrases an introduction based on the topic and file content.
+    handler: generate_and_paraphrase_intro
