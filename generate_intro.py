@@ -1,52 +1,41 @@
 import random
 
-def load_file_content(file_path):
-    """Załaduj zawartość pliku."""
-    with open(file_path, 'r') as file:
-        return file.read()
-
-def paraphrase_intro(template, topic, file_content):
-    """Generuje i parafrazuje wstęp na podstawie wzoru, tematu i pliku."""
+def paraphrase_text(text):
+    """Funkcja parafrazująca podany tekst."""
+    sentences = text.split('. ')
+    paraphrased_sentences = []
     
-    # Wstawienie tematu do szablonu
-    intro = template.replace("[TOPIC]", topic)
-
-    # Dodaj dane z pliku do kontekstu wstępu
-    context_based_on_file = extract_key_points(file_content)
-
-    # Połączenie wstępu z kontekstem
-    paraphrased_intro = intro + " " + context_based_on_file
-
-    # Prosta parafraza (można zastąpić zaawansowanym modelem NLP)
-    paraphrased_intro = paraphrase_sentence(paraphrased_intro)
-
-    return paraphrased_intro
-
-def extract_key_points(file_content):
-    """Wyciągnij kluczowe punkty z pliku."""
-    sentences = file_content.split('.')
-    if len(sentences) > 2:
-        return sentences[0] + " " + sentences[1]
-    return "Brak dodatkowych informacji."
-
-def paraphrase_sentence(sentence):
-    """Proste parafrazowanie – zamiana wyrażeń na synonimy."""
-    replacements = {
-        "is": "appears to be",
-        "important": "significant",
-        "field": "area",
-        "study": "research"
-    }
+    for sentence in sentences:
+        operation = random.choice([shuffle_words, add_intro, split_sentence, change_tense])
+        paraphrased_sentences.append(operation(sentence))
     
+    return '. '.join(paraphrased_sentences)
+
+def shuffle_words(sentence):
+    """Przestawia słowa w zdaniu."""
     words = sentence.split()
-    paraphrased_words = [replacements.get(word, word) for word in words]
-    
-    return ' '.join(paraphrased_words)
+    random.shuffle(words)
+    return ' '.join(words)
 
-# Funkcja obsługiwana przez Copilot Studio
-def generate_and_paraphrase_intro(template, topic, filePath):
-    # Załaduj plik z zawartością
-    file_content = load_file_content(filePath)
-    
-    # Wygeneruj parafrazowany wstęp
-    return paraphrase_intro(template, topic, file_content)
+def add_intro(sentence):
+    """Dodaje wstęp do zdania."""
+    intro = "W kontekście omawianego tematu, "
+    return intro + sentence
+
+def split_sentence(sentence):
+    """Rozdziela zdanie na dwa krótsze."""
+    words = sentence.split()
+    if len(words) > 5:  # Upewniamy się, że zdanie jest wystarczająco długie
+        mid = len(words) // 2
+        first_part = ' '.join(words[:mid]) + '.'
+        second_part = ' '.join(words[mid:]) + '.'
+        return first_part + " " + second_part
+    return sentence  # Jeśli zdanie jest za krótkie, zwracamy oryginał
+
+def change_tense(sentence):
+    """Zmienia czas gramatyczny w zdaniu na przyszły."""
+    if "jest" in sentence:
+        return sentence.replace("jest", "będzie")
+    elif "był" in sentence:
+        return sentence.replace("był", "będzie")
+    return sentence  # Jeśli nie ma odpowiednich słów, zwracamy oryginał
