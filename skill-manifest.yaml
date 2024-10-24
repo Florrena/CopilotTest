@@ -1,18 +1,20 @@
-# Nazwa skilla
-name: Paraphrase Input Text
-description: Bot paraphrases the input text provided by the user based on a given topic.
-
-# Parametry, które bot przyjmie
-parameters:
-  - name: input_text
-    description: The text to be paraphrased.
-    type: string
-  - name: topic
-    description: The topic to guide the paraphrasing.
-    type: string
-
-# Definicja akcji
-actions:
-  - id: paraphrase_input_text
-    description: Paraphrases the input text based on the provided topic.
-    handler: paraphrase_input_text
+{
+  "name": "Parafrazowanie",
+  "description": "Bot do parafrazowania tekstu",
+  "id": "paraphrasing_bot",
+  "version": "1.0.0",
+  "skills": [
+    {
+      "name": "paraphrase",
+      "description": "Parafrazowanie podanego tekstu",
+      "input": {
+        "type": "text",
+        "placeholder": "Podaj tekst do parafrazowania (10-12 zdań)"
+      },
+      "output": {
+        "type": "text",
+        "placeholder": "Sparafrazowany tekst"
+      }
+    }
+  ]
+}
